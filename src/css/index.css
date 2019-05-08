@@ -1,0 +1,9 @@
+body{
+    background: rgb(255, 0, 0);
+    color: white
+}
+#png{
+    background: url('../images/code.jpg');
+    width: 583px;
+    height: 430px;
+}

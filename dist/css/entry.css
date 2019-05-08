@@ -1,0 +1,20 @@
+body{
+    background: rgb(255, 0, 0);
+    color: white
+}
+#png{
+    background: url(/images/3805d019869379361353a1638384cc86.jpg);
+    width: 583px;
+    height: 430px;
+}
+#gogo {
+  width: 100px;
+  height: 100px;
+  background: #000;
+}
+
+#nav {
+  width: 100%;
+  height: 30px;
+  background: #FFF; }
+
