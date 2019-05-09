@@ -1,9 +1,19 @@
 body{
     background: rgb(255, 0, 0);
-    color: white
+    color: white;
 }
 #png{
     background: url('../images/code.jpg');
     width: 583px;
     height: 430px;
+    transform: rotate(30deg);
+    box-shadow:1px 1px 0 #000;
+    display: flex;
+    transition:2s;
+}
+#png:hover{
+    width: 700px;
+}
+#aaa{
+    background: #FFF;
 }

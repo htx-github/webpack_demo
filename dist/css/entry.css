@@ -1,20 +1,39 @@
-body{
-    background: rgb(255, 0, 0);
-    color: white
+body {
+  background: rgb(255, 0, 0);
+  color: white;
 }
-#png{
-    background: url(/images/3805d019869379361353a1638384cc86.jpg);
-    width: 583px;
-    height: 430px;
+
+#png {
+  background: url(/images/3805d019869379361353a1638384cc86.jpg);
+  width: 583px;
+  height: 430px;
+  -webkit-transform: rotate(30deg);
+  -ms-transform: rotate(30deg);
+  -o-transform: rotate(30deg);
+  transform: rotate(30deg);
+  box-shadow: 1px 1px 0 #000;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-transition: 2s;
+  -o-transition: 2s;
+  transition: 2s;
 }
+
+#png:hover {
+  width: 700px;
+}
+
 #gogo {
   width: 100px;
   height: 100px;
   background: #000;
+  transition: 2s;
 }
 
 #nav {
   width: 100%;
   height: 30px;
-  background: #FFF; }
-
+  background: #FFF;
+}

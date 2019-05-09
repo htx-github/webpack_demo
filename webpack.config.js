@@ -1,7 +1,9 @@
 const path = require('path');
+const glob=require('glob');
 const htmlPlugin = require('html-webpack-plugin');
 // const extractTextPlugin = require("extract-text-webpack-plugin");//webpack3
 const miniCssExtractPlugin = require('mini-css-extract-plugin'); //webpack4
+const purifyCSSPlugin =require('purifycss-webpack');
 var webSite = {
     publicPath: "/"
 }
@@ -10,7 +12,7 @@ module.exports = {
     //入口文件的配置项
     entry: {
         entry: './src/entry.js',
-        entry2: './src/entry2.js'
+        // entry2: './src/entry2.js'
     },
     //出口文件的配置项
     output: {
@@ -36,7 +38,9 @@ module.exports = {
                     },
                     {
                         loader: 'css-loader',
-                    }
+                        options:{importLoaders:1}//后面有几个loader，数字就为几
+                    },
+                    'postcss-loader'
                 ]
             },
             {
@@ -45,7 +49,7 @@ module.exports = {
                     loader: 'url-loader',
                     options: {
                         limit: 500, //小于500B就打包成base64编码的图片
-                        outputPath: 'images/' //把图片输出在images文件夹下
+                        outputPath: 'images', //把图片输出在images文件夹下
                     }
                 }]
             },
@@ -58,7 +62,7 @@ module.exports = {
                 use: [{
                     loader: miniCssExtractPlugin.loader
                 }, {
-                    loader: 'css-loader'
+                    loader: 'css-loader',
                 }, {
                     loader: 'less-loader'
                 }]
@@ -68,24 +72,32 @@ module.exports = {
                 use: [{
                     loader: miniCssExtractPlugin.loader
                 }, {
-                    loader: 'css-loader'
+                    loader: 'css-loader',
                 }, {
                     loader: 'sass-loader'
                 }]
+            },
+            {
+                test:/\.js$/,
+                use:['babel-loader'],
+                exclude:/node_modules/
             }
         ]
     },
     //插件，用于生产模版和各项功能
     plugins: [
         new htmlPlugin({
-            minify: { //对html进行压缩
-                removeAttributeQuotes: true //去掉属性的双引号
-            },
+            // minify: { //对html进行压缩
+            //     removeAttributeQuotes: true //去掉属性的双引号
+            // },
             hash: true, //防止js文件进行缓存，每次给它一个哈希值
             template: './src/index.html' //要打包的文件
         }),
         new miniCssExtractPlugin({
             filename: 'css/[name].css', //打包出来的路径和文件名
+        }),
+        new purifyCSSPlugin({
+            paths:glob.sync(path.join(__dirname,"src/*.html")),//找到html
         })
     ],
     //配置webpack开发服务功能
@@ -97,6 +109,14 @@ module.exports = {
         //服务端压缩是否开启
         compress: true,
         //配置服务端口号
-        port: 9595
+        port: 9595,
+        proxy: {
+            '/api': {
+              target: 'http://192.168.43.179:8080/api/',
+              pathRewrite: {'^/api' : ''},
+              changeOrigin: true,     // target是域名的话，需要这个参数，
+              secure: false,          // 设置支持https协议的代理
+            }
+        }
     }
 }
